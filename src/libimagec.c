@@ -1,35 +1,76 @@
 #include "libimagec.h"
-#include <stddef.h>
-#include <stdlib.h>
-#include <stdio.h>
 
-unsigned read_png(png_image *png_holder, const char *filepath) {
-    if (png_holder == NULL) return 1;
-    if (png_image_begin_read_from_file(png_holder, filepath) != 0) {
-        png_bytep buffer;
+void recognize_png(const char *filename, FILE *fp);
 
-        png_holder->format = PNG_FORMAT_RGBA;
+void create_png_structp(FILE *fp, png_structp *png_ptr, png_infop *info_ptr);
 
-        buffer = malloc(PNG_IMAGE_SIZE(*png_holder));
+void error_handler(png_structp png_ptr, png_const_charp error_msg) {
+    fprintf(stderr, "PNG Error: %s\n", error_msg);
+    longjmp(png_jmpbuf(png_ptr), 1);
+}
 
-        if (buffer != NULL &&
-            png_image_finish_read(png_holder, NULL/*background*/, buffer,
-                                  0/*row_stride*/, NULL/*colormap*/) != 0)
-            return 0;
+void warning_handler(png_structp png_ptr, png_const_charp warning_msg) {
+    fprintf(stderr, "PNG Warning: %s\n", warning_msg);
+}
+
+
+void read_png_file(const char *filename) {
+    FILE *fp = fopen(filename, "rb");
+    if (!fp) {
+        perror("Error opening PNG file");
+        exit(EXIT_FAILURE);
     }
 
-    /* Something went wrong reading.  libpng stores a
-     * textual message in the 'png_image' structure:
-     */
-    fprintf(stderr, "pngtopng: error: %s\n", png_holder->message);
-    return 2;
+    recognize_png(filename, fp);
 
+    png_structp *png_ptr = malloc(sizeof(png_structp));
+    png_infop *info_ptr = malloc(sizeof(png_infop));
+    create_png_structp(fp, png_ptr, info_ptr);
+
+    // Example: Get image width and height
+    png_uint_32 width, height;
+    int bit_depth, color_type;
+    png_get_IHDR(*png_ptr, *info_ptr, &width, &height, &bit_depth, &color_type, NULL, NULL, NULL);
+
+    printf("Image Width: %u\n", width);
+    printf("Image Height: %u\n", height);
+
+    // Cleanup
+    png_destroy_read_struct(png_ptr, info_ptr, NULL);
+    fclose(fp);
 }
 
-png_image *create_png_structure() {
-    png_image *image = malloc(sizeof(png_image)); // control structure of libpng
-    /* initialize default values */
-    image->version = PNG_IMAGE_VERSION;
+void create_png_structp(FILE *fp, png_structp *png_ptr, png_infop *info_ptr) {
+    (*png_ptr) = png_create_read_struct(PNG_LIBPNG_VER_STRING, NULL, error_handler, warning_handler);
+    (*info_ptr) = png_create_info_struct(png_ptr);
+    if (!(*png_ptr)) {
+        fclose(fp);
+        exit(EXIT_FAILURE);
+    }
+    if (!(*info_ptr)) {
+        png_destroy_read_struct(png_ptr, NULL, NULL);
+        fclose(fp);
+        exit(EXIT_FAILURE);
+    }
 
-    return image;
+    if (setjmp(png_jmpbuf((*png_ptr)))) {
+        png_destroy_read_struct(png_ptr, info_ptr, NULL);
+        fclose(fp);
+        exit(EXIT_FAILURE);
+    }
+
+    png_set_sig_bytes((*png_ptr), 8);
+    png_init_io((*png_ptr), fp);
+    png_read_info((*png_ptr), (*info_ptr));
 }
+
+void recognize_png(const char *filename, FILE *fp) {
+    png_byte header[8];
+    fread(header, 1, 8, fp);
+    if (png_sig_cmp(header, 0, 8)) {
+        fprintf(stderr, "File %s is not recognized as a PNG file\n", filename);
+        fclose(fp);
+        exit(EXIT_FAILURE);
+    }
+}
+

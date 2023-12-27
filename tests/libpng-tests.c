@@ -10,25 +10,12 @@
         return 1; \
     }
 
-void debug_png(png_image *image) {
-    printf("PNG Image Information:\n");
-    printf("Width: %d\n", image->width);
-    printf("Height: %d\n", image->height);
-    printf("Format: %d\n", image->format);
-    printf("Color Map Entries: %d\n", image->colormap_entries);
-    printf("Flags: %d\n", image->flags);
-    printf("Message: %s\n", image->message);
-}
-
-int read_png_test() {
-    png_image *image = create_png_structure();
-    read_png(image, "../../testImage.png");
-    debug_png(image);
-    ASSERT(strcmp(image->message, "") == 0);
+unsigned read_png_test() {
+    read_png_file("../../testImage.png");
     return 0;
 }
 
-typedef int (*TestFunction)();
+typedef unsigned (*TestFunction)();
 
 
 TestFunction test_suite[] = {
