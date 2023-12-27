@@ -1,8 +1,5 @@
 #include "libimagec.h"
 
-void recognize_png(const char *filename, FILE *fp);
-
-void create_png_structp(FILE *fp, png_structp *png_ptr, png_infop *info_ptr);
 
 void error_handler(png_structp png_ptr, png_const_charp error_msg) {
     fprintf(stderr, "PNG Error: %s\n", error_msg);
@@ -14,7 +11,7 @@ void warning_handler(png_structp png_ptr, png_const_charp warning_msg) {
 }
 
 
-void read_png_file(const char *filename) {
+png_infos *read_png_file(const char *filename) {
     FILE *fp = fopen(filename, "rb");
     if (!fp) {
         perror("Error opening PNG file");
@@ -27,17 +24,16 @@ void read_png_file(const char *filename) {
     png_infop *info_ptr = malloc(sizeof(png_infop));
     create_png_structp(fp, png_ptr, info_ptr);
 
-    // Example: Get image width and height
-    png_uint_32 width, height;
-    int bit_depth, color_type;
-    png_get_IHDR(*png_ptr, *info_ptr, &width, &height, &bit_depth, &color_type, NULL, NULL, NULL);
+    png_infos *png_handler = malloc(sizeof(png_infos));
+    png_handler->info_ptr = info_ptr;
+    png_handler->png_ptr = png_ptr;
+    png_handler->fp = fp;
+    return png_handler;
+}
 
-    printf("Image Width: %u\n", width);
-    printf("Image Height: %u\n", height);
-
-    // Cleanup
-    png_destroy_read_struct(png_ptr, info_ptr, NULL);
-    fclose(fp);
+void cleanup_png(png_infos *png) {// Cleanup
+    png_destroy_read_struct(png->png_ptr, png->info_ptr, NULL);
+    fclose(png->fp);
 }
 
 void create_png_structp(FILE *fp, png_structp *png_ptr, png_infop *info_ptr) {
