@@ -3,4 +3,9 @@ project(libimagec C)
 
 set(CMAKE_C_STANDARD 23)
 
-add_library(libimagec library.c)
+add_library(libimagec
+        src/libimagec.c)
+
+target_include_directories(libimagec PUBLIC src)
+
+add_subdirectory(tests)
