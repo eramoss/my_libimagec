@@ -16,7 +16,7 @@ typedef struct {
 
 png_infos *read_png_file(const char *filepath);
 
-void recognize_png(const char *filename, FILE *fp);
+int recognize_png(const char *filename, FILE *fp);
 
 void create_png_structp(FILE *fp, png_structp *png_ptr, png_infop *info_ptr);
 

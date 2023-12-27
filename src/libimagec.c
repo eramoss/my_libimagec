@@ -60,13 +60,14 @@ void create_png_structp(FILE *fp, png_structp *png_ptr, png_infop *info_ptr) {
     png_read_info((*png_ptr), (*info_ptr));
 }
 
-void recognize_png(const char *filename, FILE *fp) {
+int recognize_png(const char *filename, FILE *fp) {
     png_byte header[8];
     fread(header, 1, 8, fp);
     if (png_sig_cmp(header, 0, 8)) {
         fprintf(stderr, "File %s is not recognized as a PNG file\n", filename);
         fclose(fp);
-        exit(EXIT_FAILURE);
+        return 1;
     }
+    return 0;
 }
 
