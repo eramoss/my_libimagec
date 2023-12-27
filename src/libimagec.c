@@ -1,4 +1,4 @@
-#include "libimagec.h"
+#include ""
 
 unsigned load_raw_file(raw_png_t *png_handler, const char *filename) {
     unsigned char **out = &(png_handler->vector_png);
@@ -28,4 +28,10 @@ unsigned load_raw_file(raw_png_t *png_handler, const char *filename) {
     return 0;
 }
 
-unsigned decompress_png_huffman(raw_png_t *png_handler) {}
+unsigned raw_file_2RGB(raw_png_t *png, RGB_vector_t *output) {
+    if (png == NULL || output == NULL) return 1;
+
+    PNG_t *fully_png = decompress_png_huffman(png);;
+    get_RGB_from_data(fully_png, output);
+    return 0;
+}

@@ -3,6 +3,7 @@
 
 #include "stdio.h"
 #include "stdlib.h"
+#include "../lib/libpng-1.6.40/png.h"
 
 typedef struct {
     unsigned char *vector_png;

@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <string.h>
-#include "libimagec.h"
+#include "../include/libimagec.h"
 
 
 // Simple assert macro
