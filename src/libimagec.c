@@ -1,37 +1,35 @@
-#include ""
+#include "libimagec.h"
+#include <stddef.h>
+#include <stdlib.h>
+#include <stdio.h>
 
-unsigned load_raw_file(raw_png_t *png_handler, const char *filename) {
-    unsigned char **out = &(png_handler->vector_png);
-    size_t *outsize = &(png_handler->vector_png_size);
-    FILE *file;
-    long size;
+unsigned read_png(png_image *png_holder, const char *filepath) {
+    if (png_holder == NULL) return 1;
+    if (png_image_begin_read_from_file(png_holder, filepath) != 0) {
+        png_bytep buffer;
 
-    /*provide some proper output values if error will happen*/
-    *out = 0;
-    *outsize = 0;
+        png_holder->format = PNG_FORMAT_RGBA;
 
-    file = fopen(filename, "rb");
-    if (!file) return 78;
+        buffer = malloc(PNG_IMAGE_SIZE(*png_holder));
 
-    /*get filesize:*/
-    fseek(file, 0, SEEK_END);
-    size = ftell(file);
-    rewind(file);
+        if (buffer != NULL &&
+            png_image_finish_read(png_holder, NULL/*background*/, buffer,
+                                  0/*row_stride*/, NULL/*colormap*/) != 0)
+            return 0;
+    }
 
-    /*read contents of the file into the vector*/
-    *outsize = 0;
-    *out = (unsigned char *) malloc((size_t) size);
-    if (size && (*out)) (*outsize) = fread(*out, 1, (size_t) size, file);
+    /* Something went wrong reading.  libpng stores a
+     * textual message in the 'png_image' structure:
+     */
+    fprintf(stderr, "pngtopng: error: %s\n", png_holder->message);
+    return 2;
 
-    fclose(file);
-    if (!(*out) && size) return 83; /*the above malloc failed*/
-    return 0;
 }
 
-unsigned raw_file_2RGB(raw_png_t *png, RGB_vector_t *output) {
-    if (png == NULL || output == NULL) return 1;
+png_image *create_png_structure() {
+    png_image *image = malloc(sizeof(png_image)); // control structure of libpng
+    /* initialize default values */
+    image->version = PNG_IMAGE_VERSION;
 
-    PNG_t *fully_png = decompress_png_huffman(png);;
-    get_RGB_from_data(fully_png, output);
-    return 0;
+    return image;
 }

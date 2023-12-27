@@ -5,14 +5,8 @@
 #include "stdlib.h"
 #include "../lib/libpng-1.6.40/png.h"
 
-typedef struct {
-    unsigned char *vector_png;
-    size_t vector_png_size;
-} raw_png_t;
+png_image *create_png_structure();
 
-unsigned load_raw_file(raw_png_t *png_handler, const char *filename);
-
-unsigned decompress_png_huffman(raw_png_t *png_handler);
-
+unsigned read_png(png_image *png_handler, const char *filepath);
 
 #endif //LIBIMAGEC_LIBIMAGEC_H
