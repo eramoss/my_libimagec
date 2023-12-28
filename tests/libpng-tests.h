@@ -29,7 +29,7 @@ unsigned read_png_test() {
 
 
     //  Optional
-    optimize_dip_depth_color_type(png, color_type, bit_depth);
+    //    optimize_dip_depth_color_type(png, color_type, bit_depth);
     png_bytep *row_pointers = get_matrix_pointers_RGB(png, height);
 
 #ifdef DEBUG
