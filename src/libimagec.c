@@ -71,3 +71,42 @@ int recognize_png(const char *filename, FILE *fp) {
     return 0;
 }
 
+matrix *row_pointers2matrix(png_uint_32 width, png_uint_32 height,
+                            png_bytep const *row_pointers) {
+
+    matrix *m = create_matrix(width, height);
+
+    for (int y = 0; y < height; y++) {
+        for (int x = 0; x < width * 3; x += 3) {
+            rgb_struct_t *rgb = malloc(sizeof(rgb_struct_t));
+            rgb->red = row_pointers[y][x];
+            rgb->green = row_pointers[y][x + 1];
+            rgb->blue = row_pointers[y][x + 2];
+            matrix_set(m, x / 3, y, rgb);
+        }
+    }
+    return m;
+}
+
+png_bytep *get_matrix_pointers_RGB(const png_infos *png, png_uint_32 height) {
+    png_bytep *row_pointers = (png_bytep *) malloc(sizeof(png_bytep) * height);
+    for (int y = 0; y < height; y++)
+        row_pointers[y] = (png_byte *) malloc(png_get_rowbytes(*png->png_ptr, *png->info_ptr));
+
+    png_read_image(*png->png_ptr, row_pointers);
+    return row_pointers;
+}
+
+
+void optimize_dip_depth_color_type(const png_infos *png, png_byte color_type, png_byte bit_depth) {
+    if (bit_depth == 1 || bit_depth == 2 || bit_depth == 4)
+        png_set_expand(*png->png_ptr);
+
+
+    if (bit_depth == 16)
+        png_set_strip_16(*png->png_ptr);
+
+
+    if (color_type == PNG_COLOR_TYPE_RGBA)
+        png_set_strip_alpha(*png->png_ptr);
+}

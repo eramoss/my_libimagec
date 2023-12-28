@@ -45,6 +45,7 @@ unsigned test_matrix_set_and_get() {
     return 0;
 }
 
+
 #define ALL_MATRIX_TESTS \
     test_create_matrix , test_matrix_set_and_get
 

@@ -11,9 +11,7 @@
 
 unsigned read_png_test();
 
-void optimize_dip_depth_color_type(const png_infos *png, png_byte color_type, png_byte bit_depth);
-
-png_bytep *get_matrix_pointers_RGB(const png_infos *png, png_uint_32 height);
+unsigned test_rgb_matrix();
 
 void debug_rgb_values(png_uint_32 width, png_uint_32 height, png_bytep const *row_pointers);
 
@@ -48,6 +46,25 @@ unsigned read_png_test() {
     return 0;
 }
 
+unsigned test_rgb_matrix() {
+    png_infos *png = read_png_file(IMAGE_TEST_PATH);
+    png_uint_32 width = png_get_image_width(*png->png_ptr, *png->info_ptr);
+    png_uint_32 height = png_get_image_height(*png->png_ptr, *png->info_ptr);
+
+    ASSERT(width > 0);
+    ASSERT(height > 0);
+
+    png_bytep *row_pointers = get_matrix_pointers_RGB(png, height);
+    matrix *m = row_pointers2matrix(width, height, row_pointers);
+    ASSERT(matrix_x(m) == width);
+    ASSERT(matrix_y(m) == height);
+#if DEBUG
+    rgb_struct_t *rgb_value = matrix_get(m, m->x - 1, m->y - 1);
+    printf("matrix point:(%d, %d) [%d,%d,%d]\n", m->x - 1, m->y - 1, rgb_value->red, rgb_value->green, rgb_value->blue);
+#endif
+    return 0;
+}
+
 /*
  * ----------------------------------------------
  *
@@ -57,6 +74,8 @@ unsigned read_png_test() {
  *
  * ---------------------------------------------
  */
+
+
 void debug_rgb_values(png_uint_32 width, png_uint_32 height,
                       png_bytep const *row_pointers) {// Access RGB values for each pixel
     for (int y = 0; y < height; y++) {
@@ -71,30 +90,8 @@ void debug_rgb_values(png_uint_32 width, png_uint_32 height,
     }
 }
 
-png_bytep *get_matrix_pointers_RGB(const png_infos *png, png_uint_32 height) {
-    png_bytep *row_pointers = (png_bytep *) malloc(sizeof(png_bytep) * height);
-    for (int y = 0; y < height; y++)
-        row_pointers[y] = (png_byte *) malloc(png_get_rowbytes(*png->png_ptr, *png->info_ptr));
-
-    png_read_image(*png->png_ptr, row_pointers);
-    return row_pointers;
-}
-
-void optimize_dip_depth_color_type(const png_infos *png, png_byte color_type, png_byte bit_depth) {
-    if (bit_depth == 1 || bit_depth == 2 || bit_depth == 4)
-        png_set_expand(*png->png_ptr);
-
-
-    if (bit_depth == 16)
-        png_set_strip_16(*png->png_ptr);
-
-
-    if (color_type == PNG_COLOR_TYPE_RGBA)
-        png_set_strip_alpha(*png->png_ptr);
-}
-
 
 #define ALL_LIB_PNG_TESTS \
-    read_png_test
+    read_png_test, test_rgb_matrix
 
 #endif
