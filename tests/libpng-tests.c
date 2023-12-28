@@ -35,17 +35,19 @@ unsigned read_png_test() {
 
     //  Optional
     optimize_dip_depth_color_type(png, color_type, bit_depth);
-
     png_bytep *row_pointers = get_matrix_pointers_RGB(png, height);
-
-    cleanup_png(png);
+    
 #ifdef DEBUG
     debug_rgb_values(width, height, row_pointers);
+#endif
 
+    /*
+     cleanup section
+     */
+    cleanup_png(png);
     for (int y = 0; y < height; y++)
         free(row_pointers[y]);
     free(row_pointers);
-#endif
     return 0;
 }
 
