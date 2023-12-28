@@ -4,7 +4,11 @@ project(libimagec C)
 set(CMAKE_C_STANDARD 23)
 
 add_library(libimagec
-        src/libimagec.c)
+        src/libimagec.c
+        utils/matrix.c
+        utils/matrix.h
+        utils/alloc_utils.h
+)
 
 target_include_directories(libimagec PRIVATE include)
 target_include_directories(libimagec PUBLIC lib)

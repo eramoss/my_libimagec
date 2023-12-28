@@ -1,5 +1,7 @@
-#include <stdio.h>
-#include <string.h>
+#ifndef LIBPNG_TESTS
+#define LIBPNG_TESTS
+
+#include "test_utils.h"
 #include "libimagec.h"
 
 #define IMAGE_TEST_PATH "../../testImage.png"
@@ -7,12 +9,7 @@
 #define EXPECTED_DEPTH 8
 
 
-// Simple ASSERT macro
-#define ASSERT(condition) \
-    if (!(condition)) {    \
-        printf("Test failed: %s, line %d\n", __FILE__, __LINE__); \
-        return 1; \
-    }
+unsigned read_png_test();
 
 void optimize_dip_depth_color_type(const png_infos *png, png_byte color_type, png_byte bit_depth);
 
@@ -36,7 +33,7 @@ unsigned read_png_test() {
     //  Optional
     optimize_dip_depth_color_type(png, color_type, bit_depth);
     png_bytep *row_pointers = get_matrix_pointers_RGB(png, height);
-    
+
 #ifdef DEBUG
     debug_rgb_values(width, height, row_pointers);
 #endif
@@ -51,6 +48,15 @@ unsigned read_png_test() {
     return 0;
 }
 
+/*
+ * ----------------------------------------------
+ *
+ *
+ *         UTILS SECTION FOR TESTING
+ *
+ *
+ * ---------------------------------------------
+ */
 void debug_rgb_values(png_uint_32 width, png_uint_32 height,
                       png_bytep const *row_pointers) {// Access RGB values for each pixel
     for (int y = 0; y < height; y++) {
@@ -87,28 +93,8 @@ void optimize_dip_depth_color_type(const png_infos *png, png_byte color_type, pn
         png_set_strip_alpha(*png->png_ptr);
 }
 
-typedef unsigned (*TestFunction)();
 
+#define ALL_LIB_PNG_TESTS \
+    read_png_test
 
-TestFunction test_suite[] = {
-        read_png_test,
-};
-
-
-#define NUM_TESTS (sizeof(test_suite) / sizeof(test_suite[0]))
-
-int main() {
-    int result = 0;
-
-    for (int i = 0; i < NUM_TESTS; ++i) {
-        result += test_suite[i]();
-    }
-
-    if (result == 0) {
-        printf("All tests passed!\n");
-    } else {
-        printf("%d tests failed\n", result);
-    }
-
-    return result;
-}
+#endif

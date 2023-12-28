@@ -1,0 +1,327 @@
+{
+	"backtraceGraph" : 
+	{
+		"commands" : 
+		[
+			"install"
+		],
+		"files" : 
+		[
+			"lib/libpng-1.6.40/CMakeLists.txt"
+		],
+		"nodes" : 
+		[
+			{
+				"file" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 981,
+				"parent" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 998,
+				"parent" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 1006,
+				"parent" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 1013,
+				"parent" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 1015,
+				"parent" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 1020,
+				"parent" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 1022,
+				"parent" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 1028,
+				"parent" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 1034,
+				"parent" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 1036,
+				"parent" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 1040,
+				"parent" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 1042,
+				"parent" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 1044,
+				"parent" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 1046,
+				"parent" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 1053,
+				"parent" : 0
+			}
+		]
+	},
+	"installers" : 
+	[
+		{
+			"backtrace" : 1,
+			"component" : "Unspecified",
+			"destination" : "lib",
+			"paths" : 
+			[
+				"lib/libpng-1.6.40/libpng16.so.16.40.0",
+				"lib/libpng-1.6.40/libpng16.so.16"
+			],
+			"targetId" : "png_shared::@e7830b631f905c82d825",
+			"targetIndex" : 13,
+			"targetInstallNamelink" : "skip",
+			"type" : "target"
+		},
+		{
+			"backtrace" : 1,
+			"component" : "Unspecified",
+			"destination" : "lib",
+			"paths" : 
+			[
+				"lib/libpng-1.6.40/libpng16.so"
+			],
+			"targetId" : "png_shared::@e7830b631f905c82d825",
+			"targetIndex" : 13,
+			"targetInstallNamelink" : "only",
+			"type" : "target"
+		},
+		{
+			"backtrace" : 1,
+			"component" : "Unspecified",
+			"destination" : "lib",
+			"paths" : 
+			[
+				"lib/libpng-1.6.40/libpng16.a"
+			],
+			"targetId" : "png_static::@e7830b631f905c82d825",
+			"targetIndex" : 14,
+			"type" : "target"
+		},
+		{
+			"backtrace" : 2,
+			"component" : "Unspecified",
+			"destination" : "lib",
+			"paths" : 
+			[
+				"cmake-build-default/lib/libpng-1.6.40/libpng.so"
+			],
+			"type" : "file"
+		},
+		{
+			"backtrace" : 3,
+			"component" : "Unspecified",
+			"destination" : "lib",
+			"paths" : 
+			[
+				"cmake-build-default/lib/libpng-1.6.40/libpng.a"
+			],
+			"type" : "file"
+		},
+		{
+			"backtrace" : 4,
+			"component" : "Unspecified",
+			"destination" : "include",
+			"paths" : 
+			[
+				"lib/libpng-1.6.40/png.h",
+				"lib/libpng-1.6.40/pngconf.h",
+				"cmake-build-default/lib/libpng-1.6.40/pnglibconf.h"
+			],
+			"type" : "file"
+		},
+		{
+			"backtrace" : 5,
+			"component" : "Unspecified",
+			"destination" : "include/libpng16",
+			"paths" : 
+			[
+				"lib/libpng-1.6.40/png.h",
+				"lib/libpng-1.6.40/pngconf.h",
+				"cmake-build-default/lib/libpng-1.6.40/pnglibconf.h"
+			],
+			"type" : "file"
+		},
+		{
+			"backtrace" : 6,
+			"component" : "Unspecified",
+			"destination" : "bin",
+			"paths" : 
+			[
+				"cmake-build-default/lib/libpng-1.6.40/libpng-config"
+			],
+			"type" : "file"
+		},
+		{
+			"backtrace" : 7,
+			"component" : "Unspecified",
+			"destination" : "bin",
+			"paths" : 
+			[
+				"cmake-build-default/lib/libpng-1.6.40/libpng16-config"
+			],
+			"type" : "file"
+		},
+		{
+			"backtrace" : 8,
+			"component" : "Unspecified",
+			"destination" : "bin",
+			"paths" : 
+			[
+				"lib/libpng-1.6.40/pngfix"
+			],
+			"targetId" : "pngfix::@e7830b631f905c82d825",
+			"targetIndex" : 15,
+			"type" : "target"
+		},
+		{
+			"backtrace" : 8,
+			"component" : "Unspecified",
+			"destination" : "bin",
+			"paths" : 
+			[
+				"lib/libpng-1.6.40/png-fix-itxt"
+			],
+			"targetId" : "png-fix-itxt::@e7830b631f905c82d825",
+			"targetIndex" : 1,
+			"type" : "target"
+		},
+		{
+			"backtrace" : 9,
+			"component" : "Unspecified",
+			"destination" : "share/man/man3",
+			"paths" : 
+			[
+				"lib/libpng-1.6.40/libpng.3",
+				"lib/libpng-1.6.40/libpngpf.3"
+			],
+			"type" : "file"
+		},
+		{
+			"backtrace" : 10,
+			"component" : "Unspecified",
+			"destination" : "share/man/man5",
+			"paths" : 
+			[
+				"lib/libpng-1.6.40/png.5"
+			],
+			"type" : "file"
+		},
+		{
+			"backtrace" : 11,
+			"component" : "Unspecified",
+			"destination" : "lib/pkgconfig",
+			"paths" : 
+			[
+				"cmake-build-default/lib/libpng-1.6.40/libpng.pc"
+			],
+			"type" : "file"
+		},
+		{
+			"backtrace" : 12,
+			"component" : "Unspecified",
+			"destination" : "bin",
+			"paths" : 
+			[
+				"cmake-build-default/lib/libpng-1.6.40/libpng-config"
+			],
+			"type" : "file"
+		},
+		{
+			"backtrace" : 13,
+			"component" : "Unspecified",
+			"destination" : "lib/pkgconfig",
+			"paths" : 
+			[
+				"cmake-build-default/lib/libpng-1.6.40/libpng16.pc"
+			],
+			"type" : "file"
+		},
+		{
+			"backtrace" : 14,
+			"component" : "Unspecified",
+			"destination" : "bin",
+			"paths" : 
+			[
+				"cmake-build-default/lib/libpng-1.6.40/libpng16-config"
+			],
+			"type" : "file"
+		},
+		{
+			"backtrace" : 15,
+			"component" : "Unspecified",
+			"destination" : "lib/libpng",
+			"exportName" : "libpng",
+			"exportTargets" : 
+			[
+				{
+					"id" : "png_shared::@e7830b631f905c82d825",
+					"index" : 13
+				},
+				{
+					"id" : "png_static::@e7830b631f905c82d825",
+					"index" : 14
+				}
+			],
+			"paths" : 
+			[
+				"lib/libpng-1.6.40/CMakeFiles/Export/27e805ec6cde31251f2809ac4798f31f/libpng16.cmake"
+			],
+			"type" : "export"
+		}
+	],
+	"paths" : 
+	{
+		"build" : "lib/libpng-1.6.40",
+		"source" : "lib/libpng-1.6.40"
+	}
+}
