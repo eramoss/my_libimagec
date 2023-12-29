@@ -8,10 +8,7 @@
 #define PNG_COLOR_TYPE_RGB2 (6)
 #define EXPECTED_DEPTH 8
 
-
 unsigned read_png_test();
-
-unsigned test_rgb_matrix();
 
 void debug_rgb_values(png_uint_32 width, png_uint_32 height, png_bytep const *row_pointers);
 

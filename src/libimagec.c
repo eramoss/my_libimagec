@@ -22,7 +22,6 @@ image *create_png_image(FILE *fp) {
     png_structp *png_ptr = malloc(sizeof(png_structp));
     png_infop *info_ptr = malloc(sizeof(png_infop));
     create_png_structp(fp, png_ptr, info_ptr);
-    png_set_sig_bytes(*png_ptr, 8);
 
     image *png_handler = png_set_image_fields(png_ptr, info_ptr);
     return png_handler;
