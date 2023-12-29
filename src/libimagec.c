@@ -11,7 +11,7 @@ void warning_handler(png_structp png_ptr, png_const_charp warning_msg) {
 }
 
 
-png_infos *read_png_file(const char *filename) {
+image *read_png_file(const char *filename) {
     FILE *fp = fopen(filename, "rb");
     if (!fp) {
         perror("Error opening PNG file");
@@ -25,13 +25,13 @@ png_infos *read_png_file(const char *filename) {
     create_png_structp(fp, png_ptr, info_ptr);
     png_set_sig_bytes(*png_ptr, 8);
 
-    png_infos *png_handler = malloc(sizeof(png_infos));
+    image *png_handler = malloc(sizeof(image));
     png_handler->info_ptr = info_ptr;
     png_handler->png_ptr = png_ptr;
     return png_handler;
 }
 
-void cleanup_png(png_infos *png) {// Cleanup
+void cleanup_png(image *png) {// Cleanup
     png_destroy_read_struct(png->png_ptr, png->info_ptr, NULL);
 }
 
@@ -71,7 +71,7 @@ int recognize_png(const char *filename, FILE *fp) {
 }
 
 
-png_bytep *get_matrix_pointers_RGB(const png_infos *png, png_uint_32 height) {
+png_bytep *get_matrix_pointers_RGB(const image *png, png_uint_32 height) {
     png_bytep *row_pointers = (png_bytep *) malloc(sizeof(png_bytep) * height);
     for (int y = 0; y < height; y++)
         row_pointers[y] = (png_byte *) malloc(png_get_rowbytes(*png->png_ptr, *png->info_ptr));
@@ -81,7 +81,7 @@ png_bytep *get_matrix_pointers_RGB(const png_infos *png, png_uint_32 height) {
 }
 
 
-void optimize_dip_depth_color_type(const png_infos *png, png_byte color_type, png_byte bit_depth) {
+void optimize_dip_depth_color_type(const image *png, png_byte color_type, png_byte bit_depth) {
     if (bit_depth == 1 || bit_depth == 2 || bit_depth == 4)
         png_set_expand(*png->png_ptr);
 

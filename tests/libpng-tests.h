@@ -16,7 +16,7 @@ unsigned test_rgb_matrix();
 void debug_rgb_values(png_uint_32 width, png_uint_32 height, png_bytep const *row_pointers);
 
 unsigned read_png_test() {
-    png_infos *png = read_png_file(IMAGE_TEST_PATH);
+    image *png = read_png_file(IMAGE_TEST_PATH);
     png_uint_32 width = png_get_image_width(*png->png_ptr, *png->info_ptr);
     png_uint_32 height = png_get_image_height(*png->png_ptr, *png->info_ptr);
     png_byte color_type = png_get_color_type(*png->png_ptr, *png->info_ptr);
