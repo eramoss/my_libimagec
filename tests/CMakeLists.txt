@@ -1,6 +1,5 @@
 add_executable(tests
         libpng-tests.h
-        matrix_tests.h
         main_tests.c
         test_utils.h
 )

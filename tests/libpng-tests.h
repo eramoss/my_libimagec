@@ -46,25 +46,6 @@ unsigned read_png_test() {
     return 0;
 }
 
-unsigned test_rgb_matrix() {
-    png_infos *png = read_png_file(IMAGE_TEST_PATH);
-    png_uint_32 width = png_get_image_width(*png->png_ptr, *png->info_ptr);
-    png_uint_32 height = png_get_image_height(*png->png_ptr, *png->info_ptr);
-
-    ASSERT(width > 0);
-    ASSERT(height > 0);
-
-    png_bytep *row_pointers = get_matrix_pointers_RGB(png, height);
-    matrix *m = row_pointers2matrix(width, height, row_pointers);
-    ASSERT(matrix_x(m) == width);
-    ASSERT(matrix_y(m) == height);
-#if DEBUG
-    rgb_struct_t *rgb_value = matrix_get(m, m->x - 1, m->y - 1);
-    printf("matrix point:(%d, %d) [%d,%d,%d]\n", m->x - 1, m->y - 1, rgb_value->red, rgb_value->green, rgb_value->blue);
-#endif
-    return 0;
-}
-
 /*
  * ----------------------------------------------
  *
@@ -92,6 +73,6 @@ void debug_rgb_values(png_uint_32 width, png_uint_32 height,
 
 
 #define ALL_LIB_PNG_TESTS \
-    read_png_test, test_rgb_matrix
+    read_png_test
 
 #endif

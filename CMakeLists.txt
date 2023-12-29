@@ -5,8 +5,6 @@ set(CMAKE_C_STANDARD 23)
 
 add_library(libimagec
         src/libimagec.c
-        utils/matrix.c
-        utils/matrix.h
         utils/alloc_utils.h
 )
 
