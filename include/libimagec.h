@@ -19,20 +19,15 @@ typedef struct {
     png_byte filter_method;
     png_byte compression_type;
     png_byte interlace_type;
+    FILE *fp;
 } image;
 
 
-image *read_png_file(const char *filepath);
+image *read_image(const char *filepath);
 
-png_bytep *get_matrix_pointers_RGB(const image *png, png_uint_32 height);
+png_bytep *get_matrix_pointers_RGB(const image *image, png_uint_32 height);
 
-void optimize_dip_depth_color_type(const image *png, png_byte color_type, png_byte bit_depth);
-
-int recognize_png(const char *filename, FILE *fp);
-
-void create_png_structp(FILE *fp, png_structp *png_ptr, png_infop *info_ptr);
-
-void cleanup_png(image *png);
+void cleanup_image(image *image);
 
 
 #endif //LIBIMAGEC_LIBIMAGEC_H

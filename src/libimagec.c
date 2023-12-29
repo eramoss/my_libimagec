@@ -10,8 +10,11 @@ void warning_handler(png_structp png_ptr, png_const_charp warning_msg) {
     fprintf(stderr, "PNG Warning: %s\n", warning_msg);
 }
 
+void create_png_structp(FILE *fp, png_structp *png_ptr, png_infop *info_ptr);
 
-image *read_png_file(const char *filename) {
+int recognize_png(const char *filename, FILE *fp);
+
+image *read_image(const char *filename) {
     FILE *fp = fopen(filename, "rb");
     if (!fp) {
         perror("Error opening PNG file");
@@ -31,8 +34,10 @@ image *read_png_file(const char *filename) {
     return png_handler;
 }
 
-void cleanup_png(image *png) {// Cleanup
-    png_destroy_read_struct(png->png_ptr, png->info_ptr, NULL);
+void cleanup_image(image *image) {// Cleanup
+    png_destroy_read_struct(image->png_ptr, image->info_ptr, NULL);
+    free(image->fp);
+    free(image);
 }
 
 void create_png_structp(FILE *fp, png_structp *png_ptr, png_infop *info_ptr) {
@@ -80,16 +85,3 @@ png_bytep *get_matrix_pointers_RGB(const image *png, png_uint_32 height) {
     return row_pointers;
 }
 
-
-void optimize_dip_depth_color_type(const image *png, png_byte color_type, png_byte bit_depth) {
-    if (bit_depth == 1 || bit_depth == 2 || bit_depth == 4)
-        png_set_expand(*png->png_ptr);
-
-
-    if (bit_depth == 16)
-        png_set_strip_16(*png->png_ptr);
-
-
-    if (color_type == PNG_COLOR_TYPE_RGBA)
-        png_set_strip_alpha(*png->png_ptr);
-}
