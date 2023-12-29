@@ -13,11 +13,6 @@ typedef struct {
     png_infop *info_ptr;
 } png_infos;
 
-typedef struct {
-    png_byte red;
-    png_byte green;
-    png_byte blue;
-} rgb_struct_t;
 
 png_infos *read_png_file(const char *filepath);
 
