@@ -6,6 +6,8 @@ set(CMAKE_C_STANDARD 23)
 add_library(libimagec
         src/libimagec.c
         utils/alloc_utils.h
+        include/png_interface.h
+        src/png_interface.c
 )
 
 target_include_directories(libimagec PRIVATE include)

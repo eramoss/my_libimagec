@@ -17,30 +17,26 @@ void debug_rgb_values(png_uint_32 width, png_uint_32 height, png_bytep const *ro
 
 unsigned read_png_test() {
     image *png = read_image(IMAGE_TEST_PATH);
-    png_uint_32 width = png_get_image_width(*png->png_ptr, *png->info_ptr);
-    png_uint_32 height = png_get_image_height(*png->png_ptr, *png->info_ptr);
-    png_byte color_type = png_get_color_type(*png->png_ptr, *png->info_ptr);
-    png_byte bit_depth = png_get_bit_depth(*png->png_ptr, *png->info_ptr);
 
-    ASSERT(width > 0);
-    ASSERT(height > 0);
-    ASSERT(color_type == (PNG_COLOR_TYPE_RGB | PNG_COLOR_TYPE_RGB2));
-    ASSERT(bit_depth == EXPECTED_DEPTH);
+    ASSERT(png->width > 0);
+    ASSERT(png->height > 0);
+    ASSERT(png->color_type == (PNG_COLOR_TYPE_RGB | PNG_COLOR_TYPE_RGB2));
+    ASSERT(png->bit_depth == EXPECTED_DEPTH);
 
-
-    png_bytep *row_pointers = get_matrix_pointers_RGB(png, height);
 
 #ifdef DEBUG
-    debug_rgb_values(width, height, row_pointers);
-#endif
-
+    png_bytep *row_pointers = get_matrix_pointers_RGB(png->png_ptr, png->info_ptr, png->height);
+    debug_rgb_values(png->width, png->height, row_pointers);
     /*
      cleanup section
-     */
+ */
     cleanup_image(png);
-    for (int y = 0; y < height; y++)
+    for (int y = 0; y < png->height; y++)
         free(row_pointers[y]);
     free(row_pointers);
+#endif
+
+
     return 0;
 }
 

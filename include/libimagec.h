@@ -1,16 +1,13 @@
 #ifndef LIBIMAGEC_LIBIMAGEC_H
 #define LIBIMAGEC_LIBIMAGEC_H
 
-#include <stddef.h>
-#include <stdlib.h>
-#include <string.h>
-#include <stdio.h>
-#include <zlib.h>
-#include "../lib/libpng-1.6.40/png.h"
+#include "png_interface.h"
 
 typedef unsigned char image_byte;
 typedef unsigned short image_uint_16;
 typedef image_uint_16 image_type;
+
+#define PNG_IMAGE_TYPE 0
 
 typedef struct {
     png_structp *png_ptr;
@@ -29,8 +26,6 @@ typedef struct {
 
 
 image *read_image(const char *filepath);
-
-png_bytep *get_matrix_pointers_RGB(const image *image, png_uint_32 height);
 
 void cleanup_image(image *image);
 
