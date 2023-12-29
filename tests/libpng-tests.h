@@ -33,8 +33,8 @@ unsigned png_rgb_to_grayscale_test() {
     setjmp(png_jmpbuf(png_ptr));
     png_init_io(png_ptr, fp);
     png_set_IHDR(png_ptr, info_ptr, png->width, png->height,
-                 8, PNG_COLOR_TYPE_RGB, PNG_INTERLACE_NONE,
-                 PNG_COMPRESSION_TYPE_BASE, PNG_FILTER_TYPE_BASE);
+                 8, png->color_type, png->interlace_type,
+                 png->compression_type, png->filter_method);
 
     default_png_rgb_to_gray(png->png_ptr, SILENTLY_ACTION);
     png_write_info(png_ptr, info_ptr);

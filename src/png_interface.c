@@ -39,7 +39,7 @@ void create_png_structp(FILE *fp, png_structp *png_ptr, png_infop *info_ptr) {
 
 void default_png_rgb_to_gray(png_structp *png_ptr, int error_code) {
     png_set_rgb_to_gray_fixed(
-            *png_ptr, error_code, 21268, 71514
+            *png_ptr, error_code, -1, -1
     );
 }
 
