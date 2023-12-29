@@ -3,6 +3,7 @@
 //
 #include "../include/png_interface.h"
 
+
 void error_handler(png_structp png_ptr, png_const_charp error_msg) {
     fprintf(stderr, "PNG Error: %s\n", error_msg);
     longjmp(png_jmpbuf(png_ptr), 1);
@@ -34,6 +35,12 @@ void create_png_structp(FILE *fp, png_structp *png_ptr, png_infop *info_ptr) {
     png_set_sig_bytes((*png_ptr), 8);
     png_init_io((*png_ptr), fp);
     png_read_info((*png_ptr), (*info_ptr));
+}
+
+void default_png_rgb_to_gray(png_structp *png_ptr, int error_code) {
+    png_set_rgb_to_gray_fixed(
+            *png_ptr, error_code, 21268, 71514
+    );
 }
 
 unsigned recognize_png(const char *filename, FILE *fp) {

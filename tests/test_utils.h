@@ -35,7 +35,6 @@ void default_debug_rgb_(image *png) {
     /*
      cleanup section
  */
-    cleanup_image(png);
     for (int y = 0; y < png->height; y++)
         free(row_pointers[y]);
     free(row_pointers);

@@ -29,7 +29,6 @@ image *create_png_image(FILE *fp) {
 
 void cleanup_image(image *image) {// Cleanup
     png_destroy_read_struct(image->png_ptr, image->info_ptr, NULL);
-    free(image->fp);
     free(image);
 }
 
