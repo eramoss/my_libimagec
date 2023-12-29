@@ -15,6 +15,7 @@ image *read_image(const char *filename) {
     if (recognize_png(filename, fp) == 0) {
         return create_png_image(fp);
     }
+    exit(EXIT_FAILURE);
 }
 
 image *create_png_image(FILE *fp) {
