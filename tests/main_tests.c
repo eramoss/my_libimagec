@@ -1,10 +1,10 @@
 #include <stdio.h>
-
+#include "recognize_image.h"
 
 typedef unsigned (*TestFunction)();
 
 TestFunction test_suite[] = {
-        
+        RECOGNIZE_TESTS,
 };
 
 #define NUM_TESTS (sizeof(test_suite) / sizeof(test_suite[0]))

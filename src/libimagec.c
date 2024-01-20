@@ -1,60 +1,42 @@
 #include <stdio.h>
-#include <stdlib.h>
 #include "libimagec.h"
 
+Image *load_image(const char *file_path) {
 
-FILE *get_file(const char *filename);
+    return NULL;
+}
 
-image *create_png_image(FILE *fp);
+void save_image(const char *file_path, const Image *image) {
 
-image *png_set_image_fields(png_structp *png_ptr, png_infop *info_ptr);
+}
 
-image *read_image(const char *filename) {
-    FILE *fp = get_file(filename);
+void free_image(Image *image) {
 
-    if (recognize_png(filename, fp) == 0) {
-        return create_png_image(fp);
+}
+
+Image *resize_image(const Image *image, int new_width, int new_height) {
+
+    return NULL; // Placeholder, actual implementation needed
+}
+
+ImageFormat image_format(const char *file_path) {
+    FILE *file = fopen(file_path, "rb");
+    if (!file) {
+        fprintf(stderr, "Error opening file: nonexistent_file.txt\n");
+        // Unable to open the file
+        return UNKNOWN;
     }
-    exit(EXIT_FAILURE);
-}
 
-image *create_png_image(FILE *fp) {
-    png_structp *png_ptr = malloc(sizeof(png_structp));
-    png_infop *info_ptr = malloc(sizeof(png_infop));
-    create_png_structp(fp, png_ptr, info_ptr);
+    png_byte header[8];
+    fread(header, 1, sizeof(header), file);
 
-    image *png_handler = png_set_image_fields(png_ptr, info_ptr);
-    return png_handler;
-}
-
-void cleanup_image(image *image) {// Cleanup
-    png_destroy_read_struct(image->png_ptr, image->info_ptr, NULL);
-    free(image);
-}
-
-FILE *get_file(const char *filename) {
-    FILE *fp = fopen(filename, "rb");
-    if (!fp) {
-        perror("Error opening PNG file");
-        exit(EXIT_FAILURE);
+    // Check if the file is a PNG by using libpng functions
+    if (png_sig_cmp(header, 0, 8) == 0) {
+        fclose(file);
+        return PNG;
     }
-    return fp;
+    // Add more checks for other formats as needed
+
+    fclose(file);
+    return UNKNOWN;
 }
-
-image *png_set_image_fields(png_structp *png_ptr, png_infop *info_ptr) {
-    image *png_handler = malloc(sizeof(image));
-    png_handler->info_ptr = info_ptr;
-    png_handler->png_ptr = png_ptr;
-    png_handler->width = png_get_image_width(*png_handler->png_ptr, *png_handler->info_ptr);
-    png_handler->height = png_get_image_height(*png_handler->png_ptr, *png_handler->info_ptr);
-    png_handler->bit_depth = png_get_bit_depth(*png_handler->png_ptr, *png_handler->info_ptr);
-    png_handler->color_type = png_get_color_type(*png_handler->png_ptr, *png_handler->info_ptr);
-    png_handler->channels = png_get_channels(*png_handler->png_ptr, *png_handler->info_ptr);
-    png_handler->compression_type = png_get_compression_type(*png_handler->png_ptr, *png_handler->info_ptr);
-    png_handler->filter_method = png_get_filter_type(*png_handler->png_ptr, *png_handler->info_ptr);
-    png_handler->interlace_type = png_get_interlace_type(*png_handler->png_ptr, *png_handler->info_ptr);
-    png_handler->image_type = PNG_IMAGE_TYPE;
-    return png_handler;
-}
-
-

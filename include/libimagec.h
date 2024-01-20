@@ -1,31 +1,30 @@
 #ifndef LIBIMAGEC_LIBIMAGEC_H
 #define LIBIMAGEC_LIBIMAGEC_H
 
-#include "png_interface.h"
+#include "libpng-1.6.40/png.h"
 
-// Enum to represent different image formats
 typedef enum {
     PNG,
-    JPEG,
     BMP,
+    JPG,
+    // ...
+    UNKNOWN,
 } ImageFormat;
 
-// Structure to represent an image
 typedef struct {
     int width;
     int height;
-    unsigned char *data; // Assuming image data is represented as a byte array
-    ImageFormat format;
+    unsigned char *data; // Assuming images are represented as raw pixel data
 } Image;
 
-// Function to load an image from a file
-Image loadImage(const char *filePath);
+Image *load_image(const char *file_path);
 
-// Function to save an image to a file
-bool saveImage(const char *filePath, const Image *image, ImageFormat format);
+void save_image(const char *file_path, const Image *image);
 
-// Function to free memory allocated for an image
-void freeImage(Image *image);
+void free_image(Image *image);
 
+Image *resize_image(const Image *image, int new_width, int new_height);
+
+ImageFormat image_format(const char *file_path);
 
 #endif //LIBIMAGEC_LIBIMAGEC_H
