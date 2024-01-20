@@ -30,8 +30,9 @@ void debug_rgb_values(png_uint_32 width, png_uint_32 height,
 
 void default_debug_rgb_(image *png) {
 #ifdef DEBUG
+    sleep(2);
     png_bytep *row_pointers = get_matrix_pointers_RGB(png->png_ptr, png->info_ptr, png->height);
-    debug_rgb_values(png->width, png->height, row_pointers);
+    //debug_rgb_values(png->width, png->height, row_pointers);
     /*
      cleanup section
  */

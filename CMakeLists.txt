@@ -10,6 +10,7 @@ add_library(libimagec
         src/png_interface.c
 )
 
+include_directories(include lib)
 target_include_directories(libimagec PRIVATE include)
 target_include_directories(libimagec PUBLIC lib)
 

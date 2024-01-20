@@ -3,31 +3,29 @@
 
 #include "png_interface.h"
 
-typedef unsigned char image_byte;
-typedef unsigned short image_uint_16;
-typedef image_uint_16 image_type;
+// Enum to represent different image formats
+typedef enum {
+    PNG,
+    JPEG,
+    BMP,
+} ImageFormat;
 
-#define PNG_IMAGE_TYPE 0
-
+// Structure to represent an image
 typedef struct {
-    png_structp *png_ptr;
-    png_infop *info_ptr;
-    image_uint_16 width;
-    image_uint_16 height;
-    image_byte bit_depth;
-    image_byte color_type;
-    image_byte channels;
-    image_byte filter_method;
-    image_byte compression_type;
-    image_byte interlace_type;
-    image_type image_type;
-    FILE *fp;
-} image;
+    int width;
+    int height;
+    unsigned char *data; // Assuming image data is represented as a byte array
+    ImageFormat format;
+} Image;
 
+// Function to load an image from a file
+Image loadImage(const char *filePath);
 
-image *read_image(const char *filepath);
+// Function to save an image to a file
+bool saveImage(const char *filePath, const Image *image, ImageFormat format);
 
-void cleanup_image(image *image);
+// Function to free memory allocated for an image
+void freeImage(Image *image);
 
 
 #endif //LIBIMAGEC_LIBIMAGEC_H
