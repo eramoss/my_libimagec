@@ -5,11 +5,8 @@
 #ifndef LIBIMAGEC_RECOGNIZE_IMAGE_H
 #define LIBIMAGEC_RECOGNIZE_IMAGE_H
 
-#include "libimagec.h"
 #include "test_utils.h"
 
-#define PNG_IMAGE_PATH TEST_DIRECTORY "test_images/test.png"
-#define PNG_ERROR_IMAGE_PATH TEST_DIRECTORY "test_images/test_error.png"
 
 unsigned recognize_png_success() {
     ImageFormat result = image_format(PNG_IMAGE_PATH);

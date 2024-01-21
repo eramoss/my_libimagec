@@ -8,7 +8,8 @@
 #include "libimagec.h"
 
 #define TEST_DIRECTORY "../../tests/"
-
+#define PNG_IMAGE_PATH TEST_DIRECTORY "test_images/test.png"
+#define PNG_ERROR_IMAGE_PATH TEST_DIRECTORY "test_images/test_error.png"
 // Simple ASSERTs macro
 #define ASSERT(condition) \
     do { \

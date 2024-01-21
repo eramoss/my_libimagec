@@ -3,6 +3,7 @@
 
 #include "libpng-1.6.40/png.h"
 
+
 typedef enum {
     PNG,
     BMP,
@@ -12,18 +13,24 @@ typedef enum {
 } ImageFormat;
 
 typedef struct {
+    png_infop info_p;
+    png_structp struct_p;
+} LibPngBaseStructure;
+
+typedef struct {
     int width;
     int height;
     unsigned char *data; // Assuming images are represented as raw pixel data
+    ImageFormat format;
+    LibPngBaseStructure *png_p;
 } Image;
+
 
 Image *load_image(const char *file_path);
 
 void save_image(const char *file_path, const Image *image);
 
 void free_image(Image *image);
-
-Image *resize_image(const Image *image, int new_width, int new_height);
 
 ImageFormat image_format(const char *file_path);
 
